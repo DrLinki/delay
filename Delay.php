@@ -11,18 +11,18 @@ class Delay{
     public int $hours_total;
     public int $minutes;
     public int $minutes_total;
-    public int $secondes;
-    public int $secondes_total;
+    public int $seconds;
+    public int $seconds_total;
 
     public function __construct($duration = null){
-        
+
         $this->years = 0;
         $this->months = 0;
         $this->weeks = 0;
         $this->days = 0;
         $this->hours = 0;
         $this->minutes = 0;
-        $this->secondes = 0;
+        $this->seconds = 0;
 
         if($duration != null){
             if(is_numeric($duration)){
@@ -36,7 +36,7 @@ class Delay{
     public function setDuration($duration){
         $st = strtotime(0);
         $delay = $st + $duration;
-        $this->secondes = date('s', $delay);
+        $this->seconds = date('s', $delay);
         $this->minutes = date('i', $delay);
         $this->hours = date('H', $delay);
         $this->days = date('d', $delay) - 1;
@@ -48,7 +48,7 @@ class Delay{
         $this->days_total = floor($duration / 86400);
         $this->hours_total = floor($duration /3600);
         $this->minutes_total = floor($duration /60);
-        $this->secondes_total = $duration;
+        $this->seconds_total = $duration;
     }
 
     public function setDelay($delay){
@@ -66,12 +66,12 @@ class Delay{
                 $this->hours = intval(substr($time, 1));
             elseif(strtolower(substr($time, 0, 1)) == "i" && is_numeric(substr($time, 1)) && empty($this->minutes))
                 $this->minutes = intval(substr($time, 1));
-            elseif(strtolower(substr($time, 0, 1)) == "s" && is_numeric(substr($time, 1)) && empty($this->secondes))
-                $this->secondes = intval(substr($time, 1));
+            elseif(strtolower(substr($time, 0, 1)) == "s" && is_numeric(substr($time, 1)) && empty($this->seconds))
+                $this->seconds = intval(substr($time, 1));
             else
                 throw new ErrorException("The Delay format is not recognized");
         }
-        $duration   = $this->secondes 
+        $duration   = $this->seconds 
                     + $this->minutes * 60 
                     + $this->hours * 3600 
                     + $this->days * 86400 
@@ -93,8 +93,8 @@ class Delay{
             $delay.= ";H".$this->hours;
         if(!empty($this->minutes))
             $delay.= ";I".$this->minutes;
-        if(!empty($this->secondes))
-            $delay.= ";S".$this->secondes;
+        if(!empty($this->seconds))
+            $delay.= ";S".$this->seconds;
         return trim($delay, ";");
     }
     
@@ -110,8 +110,8 @@ class Delay{
             $timeLeft.= " ".$this->hours." hours ";
         if(!empty($this->minutes))
             $timeLeft.= " ".$this->minutes." minutes ";
-        if(!empty($this->secondes))
-            $timeLeft.= " ".$this->secondes." secondes ";
+        if(!empty($this->seconds))
+            $timeLeft.= " ".$this->seconds." seconds ";
         $timeLeft = str_replace("  ", ", ", $timeLeft);
         return trim($timeLeft);
     }
